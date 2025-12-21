@@ -153,9 +153,9 @@ export const SHOP_ITEMS = [
 
 // Массив новогодней/зимней музыки (3 трека)
 export const MUSIC = [
-  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3', // Jingle Bells style
-  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/wham.mp3', // Chill Winter
-  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/ru.mp3', // Upbeat Christmas
+  'https://cdn.jsdelivr.net/gh/dimitriev55konstatin55-cell/Fruit-Crash-audio@main/rock.mp3', // Jingle Bells style
+  'https://cdn.jsdelivr.net/gh/dimitriev55konstatin55-cell/Fruit-Crash-audio@main/wham.mp3', // Chill Winter
+  'https://cdn.jsdelivr.net/gh/dimitriev55konstatin55-cell/Fruit-Crash-audio@main/ru.mp3', // Upbeat Christmas
 ];
 
 export const SFX = {
