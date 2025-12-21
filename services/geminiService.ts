@@ -1,66 +1,58 @@
-
 import { CANDY_COLORS } from '../constants';
 
-const PRAISES = ["Хо-хо-хо!", "Морозно!", "Отлично!", "Волшебно!", "Вкусно!", "Ледяной!", "Ух ты!", "Спасибо!", "Свежо!"];
+const PRAISES_RU = ["Хо-хо-хо!", "Морозно!", "Отлично!", "Волшебно!", "Вкусно!"];
+const PRAISES_EN = ["Ho-ho-ho!", "Frosty!", "Excellent!", "Magical!", "Tasty!"];
 
-// Генерация уровня (Чистая математика, без ИИ)
-const generateOfflineLevel = (level: number) => {
-    const isCollectLevel = Math.random() < 0.6; 
-    const levelType = isCollectLevel ? 'collect' : 'score';
+export const generateOfflineLevel = (level: number) => {
+    // Чередуем: 1, 3, 5... - Сбор. 2, 4, 6... - Очки.
+    const levelType = level % 2 !== 0 ? 'collect' : 'score';
 
     let targetScore = 0;
     const targetFruits = [];
 
     if (levelType === 'score') {
-        // УПРОЩЕНО: Меньше очков для победы
         targetScore = 800 + (level * 150); 
     } else {
         targetScore = 300 + (level * 50);
-
         const targetsCount = Math.min(4, 2 + Math.floor((level) / 5));
         const availableColors = [...CANDY_COLORS].sort(() => 0.5 - Math.random());
-        
         for (let i = 0; i < targetsCount; i++) {
-            const color = availableColors[i];
-            const count = 6 + Math.floor(level * 0.5); 
-            targetFruits.push({ color, count });
+            targetFruits.push({ color: availableColors[i], count: 6 + Math.floor(level * 0.5) });
         }
     }
 
-    const stories = [
-        "Дядя Макар (он же Дед Мороз) проверяет списки.",
-        "Сани Дяди Макара требуют подзарядки фруктами.",
-        "Снеговики помогают Дяде Макару в саду.",
-        "Маскировка Деда Мороза почти идеальна.",
-        "Нужно наполнить ледяной погреб Дяди Макара.",
-        "Эльфы устроили соревнование по сбору.",
-        "Дядя Макар готовит волшебный компот.",
-        "Северное сияние освещает сад Макара.",
-        "Замерзшие ветки хранят самые сладкие плоды.",
-        "Дядя Макар надевает красную шубу."
+    const storiesRu = [
+        "Дядя Макар проверяет списки.", "Сани требуют подзарядки.", "Снеговики помогают в саду.",
+        "Маскировка почти идеальна.", "Нужно наполнить погреб.", "Эльфы устроили соревнование.",
+        "Готовим волшебный компот.", "Северное сияние освещает сад.", "Замерзшие ветки сладкие.",
+        "Дядя Макар надевает шубу."
+    ];
+    const storiesEn = [
+        "Uncle Makar checks the lists.", "Sleigh needs recharging.", "Snowmen help in the garden.",
+        "Camouflage is almost perfect.", "Need to fill the cellar.", "Elves started a competition.",
+        "Cooking magic compote.", "Northern lights light up the garden.", "Frozen branches are sweet.",
+        "Uncle Makar puts on his coat."
     ];
 
-    let objectiveText = "";
-    if (levelType === 'score') {
-        objectiveText = `Уровень ${level}: Набери ${targetScore} очков!`;
-    } else {
-        objectiveText = `Уровень ${level}: Собери фрукты!`;
-    }
+    const storyIndex = level % storiesRu.length;
 
+    // Возвращаем тексты на обоих языках
     return { 
       levelType,
-      objective: objectiveText,
-      storySegment: stories[level % stories.length] || "Зима близко...",
+      objectiveRu: levelType === 'score' ? `Уровень ${level}: Набери ${targetScore} очков!` : `Уровень ${level}: Собери фрукты!`,
+      objectiveEn: levelType === 'score' ? `Level ${level}: Score ${targetScore} points!` : `Level ${level}: Collect fruits!`,
+      storyRu: storiesRu[storyIndex] || "Зима близко...",
+      storyEn: storiesEn[storyIndex] || "Winter is coming...",
       targetScore,
       targetFruits
     };
 };
 
-// Функция теперь просто возвращает готовый объект
 export const getLevelObjective = async (level: number) => {
   return generateOfflineLevel(level);
 };
 
-export const getAICommentary = async (scoreDelta: number) => {
-  return PRAISES[Math.floor(Math.random() * PRAISES.length)];
+export const getAICommentary = async (scoreDelta: number, lang: 'ru' | 'en' = 'ru') => {
+  const arr = lang === 'en' ? PRAISES_EN : PRAISES_RU;
+  return arr[Math.floor(Math.random() * arr.length)];
 };
