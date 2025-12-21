@@ -152,12 +152,12 @@ export const SHOP_ITEMS = [
 ];
 
 // Массив новогодней/зимней музыки (3 трека)
-const BASE_URL = import.meta.env.BASE_URL; 
+export const MUSIC = [rockTrack, whamTrack, ruTrack];
 
 export const MUSIC = [
-  `${BASE_URL}audio/rock.mp3`,
-  `${BASE_URL}audio/wham.mp3`,
-  `${BASE_URL}audio/ru.mp3`,
+  import rockTrack from './assets/rock.mp3';
+  import whamTrack from './assets/wham.mp3';
+  import ruTrack from './assets/ru.mp3';
 ];
 
 export const SFX = {
@@ -173,10 +173,8 @@ export const SFX = {
 // Helper to generate tiered achievements
 const createTieredAchievement = (
   groupId: string, 
-  baseTitle: string, 
-  baseTitleEn: string,
-  baseDesc: string, 
-  baseDescEn: string,
+  baseTitle: string, baseTitleEn: string,
+  baseDesc: string, baseDescEn: string,
   baseReq: number, 
 ): Achievement[] => {
   const tiers = [
@@ -191,8 +189,10 @@ const createTieredAchievement = (
     id: `${groupId}_${index + 1}`,
     groupId,
     level: index + 1,
-    title: `${baseTitle} ${tier.name}`, // Needs dynamic translation in component
+    title: `${baseTitle} ${tier.name}`,
+    titleEn: `${baseTitleEn} ${tier.name}`, // Сохраняем EN
     description: `${baseDesc} (${Math.floor(baseReq * tier.mult)})`,
+    descriptionEn: `${baseDescEn} (${Math.floor(baseReq * tier.mult)})`, // Сохраняем EN
     unlocked: false,
     claimed: false,
     requirement: Math.floor(baseReq * tier.mult),
