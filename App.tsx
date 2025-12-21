@@ -1016,7 +1016,7 @@ const App: React.FC = () => {
 
       if (gameState.screen === 'menu') {
         return (
-          <div key="menu-screen" onClick={unlockAudio} className="fixed inset-0 flex flex-col items-center justify-center p-6 text-white overflow-hidden">
+          <div key="menu-screen" onClick={unlockAudio} className="fixed inset-0 flex flex-col items-center justify-center p-6 text-white overflow-hidden bg-gradient-to-b from-blue-600 via-blue-400 to-white">
             {GlobalSnow}
             <div className="absolute top-4 right-4 flex gap-2 z-20" style={{top: 'max(1rem, env(safe-area-inset-top))'}}>
               <div className="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full font-bold flex items-center gap-2 shadow-lg border-2 border-white btn-press">
