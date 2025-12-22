@@ -452,6 +452,7 @@ const App: React.FC = () => {
 
   const unlockAudio = useCallback(() => {
     console.log(hasInteractedRef.current)
+    audioRef.current.volume = 0.1
     if (audioRef.current.volume == 0.3) return;
     
     hasInteractedRef.current = true;
