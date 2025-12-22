@@ -471,16 +471,40 @@ const App: React.FC = () => {
   }, [currentTrackIndex, gameState.settings.musicEnabled]);
 
   useEffect(() => {
-      const handleUnlock = () => unlockAudio();
-      window.addEventListener('click', handleUnlock);
-      window.addEventListener('touchstart', handleUnlock);
-      window.addEventListener('keydown', handleUnlock);
-      return () => {
-          window.removeEventListener('click', handleUnlock);
-          window.removeEventListener('touchstart', handleUnlock);
-          window.removeEventListener('keydown', handleUnlock);
-      };
-  }, [unlockAudio]);
+  const handleUnlock = () => {
+    if (hasInteractedRef.current) return;
+    hasInteractedRef.current = true;
+
+    const audio = new Audio(
+      'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3'
+    );
+    audio.volume = 0.3;
+    audio.loop = true;
+
+    audio.play()
+      .then(() => {
+        audioRef.current = audio;
+        console.log('Audio unlocked');
+      })
+      .catch(err => {
+        console.error('Play failed:', err);
+      });
+
+    window.removeEventListener('click', handleUnlock);
+    window.removeEventListener('touchstart', handleUnlock);
+    window.removeEventListener('keydown', handleUnlock);
+  };
+
+  window.addEventListener('click', handleUnlock, { once: true });
+  window.addEventListener('touchstart', handleUnlock, { once: true });
+  window.addEventListener('keydown', handleUnlock, { once: true });
+
+  return () => {
+    window.removeEventListener('click', handleUnlock);
+    window.removeEventListener('touchstart', handleUnlock);
+    window.removeEventListener('keydown', handleUnlock);
+  };
+}, []);
 
   // Optimized SFX Player (re-use object)
   const playSFX = (key: keyof typeof SFX) => {
