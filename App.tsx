@@ -454,7 +454,7 @@ const App: React.FC = () => {
     console.log(hasInteractedRef.current)
     if (hasInteractedRef.current) return;
     hasInteractedRef.current = true;
-    audioRef.current = new Audio('https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3')
+    audioRef.current = new Audio('https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3').play()
     // Play Background Music Logic
     if (audioRef.current) {
         if (!audioRef.current.src) {
@@ -471,40 +471,16 @@ const App: React.FC = () => {
   }, [currentTrackIndex, gameState.settings.musicEnabled]);
 
   useEffect(() => {
-  const handleUnlock = () => {
-    if (hasInteractedRef.current) return;
-    hasInteractedRef.current = true;
-
-    const audio = new Audio(
-      'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3'
-    );
-    audio.volume = 0.3;
-    audio.loop = true;
-
-    audio.play()
-      .then(() => {
-        audioRef.current = audio;
-        console.log('Audio unlocked');
-      })
-      .catch(err => {
-        console.error('Play failed:', err);
-      });
-
-    window.removeEventListener('click', handleUnlock);
-    window.removeEventListener('touchstart', handleUnlock);
-    window.removeEventListener('keydown', handleUnlock);
-  };
-
-  window.addEventListener('click', handleUnlock, { once: true });
-  window.addEventListener('touchstart', handleUnlock, { once: true });
-  window.addEventListener('keydown', handleUnlock, { once: true });
-
-  return () => {
-    window.removeEventListener('click', handleUnlock);
-    window.removeEventListener('touchstart', handleUnlock);
-    window.removeEventListener('keydown', handleUnlock);
-  };
-}, []);
+      const handleUnlock = () => unlockAudio();
+      window.addEventListener('click', handleUnlock);
+      window.addEventListener('touchstart', handleUnlock);
+      window.addEventListener('keydown', handleUnlock);
+      return () => {
+          window.removeEventListener('click', handleUnlock);
+          window.removeEventListener('touchstart', handleUnlock);
+          window.removeEventListener('keydown', handleUnlock);
+      };
+  }, [unlockAudio]);
 
   // Optimized SFX Player (re-use object)
   const playSFX = (key: keyof typeof SFX) => {
