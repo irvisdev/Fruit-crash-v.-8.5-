@@ -452,10 +452,11 @@ const App: React.FC = () => {
 
   const unlockAudio = useCallback(() => {
     console.log(hasInteractedRef.current)
-    if (audioRef.current) return;
+    if (audioRef.current.volume == 0.3) return;
     
     hasInteractedRef.current = true;
     audioRef.current = new Audio('https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3')
+    
     // Play Background Music Logic
     if (audioRef.current) {
         if (!audioRef.current.src) {
