@@ -158,6 +158,8 @@ export const MUSIC = [
   'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/rock.mp3', 
   'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/wham.mp3', 
   'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/ru.mp3', 
+  'https://raw.githubusercontent.com/dimitriev55konstatin55-cell/Fruit-Crash-audio/main/mav.mp3'
+  
 ];
 
 export const SFX = {
