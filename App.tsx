@@ -363,7 +363,7 @@ const App: React.FC = () => {
   const [showInventoryModal, setShowInventoryModal] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
   const [hintData, setHintData] = useState<{ swap: number[], match: number[] } | null>(null);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(Math.floor(Math.random() * 4));
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isShuffling, setIsShuffling] = useState(false);
   
   const touchStartRef = useRef<{ x: number, y: number, id: number } | null>(null);
