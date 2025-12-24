@@ -43,6 +43,24 @@ const trackLevel = async (userId: number, eventName: 'level_start' | 'level_win'
   }
 };
 
+const showInterstitialAd = async () => {
+  try {
+    const ysdk = (window as any).ysdk;
+    if (!ysdk || !ysdk.adv) return;
+
+    await ysdk.adv.showFullscreenAdv({
+      callbacks: {
+        onOpen: () => console.log('[AD] open'),
+        onClose: (wasShown: boolean) =>
+          console.log('[AD] close, shown:', wasShown),
+        onError: (e: any) => console.warn('[AD] error', e),
+      },
+    });
+  } catch (e) {
+    console.warn('[AD] skipped', e);
+  }
+};
+
 // --- IMAGES ---
 
 const CoinIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
@@ -701,7 +719,12 @@ const App: React.FC = () => {
             ...prev, coinsFromLevels: prev.coinsFromLevels + reward, lastLevelReward: reward, isProcessing: false 
         }));
         setRewardClaimed(true);
+        
         playSFX('win');
+        // 🔥 ПОКАЗ РЕКЛАМЫ ПОСЛЕ ПОБЕДЫ
+        setTimeout(() => {
+          showInterstitialAd();
+        }, 500);
     }
     if (!isLevelComplete) setRewardClaimed(false);
   }, [isLevelComplete, gameState.screen, rewardClaimed, tgUserId]);
