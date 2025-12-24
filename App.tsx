@@ -1181,7 +1181,7 @@ const App: React.FC = () => {
 
           </div>
         );
-      
+      }
 
       if (gameState.screen === 'shop') {
           return (
