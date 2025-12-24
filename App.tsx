@@ -1220,7 +1220,7 @@ const App: React.FC = () => {
                     </p>
 
                     <a 
-                        href="https://t.me/ТВОЯ_ССЫЛКА" 
+                        href="https://t.me/fruitcrash_news" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         onClick={() => playSFX('click')}
